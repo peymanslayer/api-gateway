@@ -1,12 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
-
+import { Controller, Get, Post,Req,Res } from '@nestjs/common';
+import { UserService } from './services/user.service';
+import { Request, Response } from 'express';
+import { Observable } from 'rxjs';
+import { SignInDto } from './dtos/signIn.dto';
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly userservice: UserService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Post()
+  signIn(@Req() req:Request,@Res() res:Response): Observable<SignInDto> {
+    return this.userservice.signIn(req.body);
   }
 }

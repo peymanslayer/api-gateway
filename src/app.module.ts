@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
+import { UserService } from './services/user.service';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 @Module({
-  imports: [],
+  imports: [ClientsModule.register([{
+    name:'user-queue',
+    transport:Transport.RMQ,
+  }])],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [UserService],
 })
 export class AppModule {}
