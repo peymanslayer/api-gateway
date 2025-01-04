@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
-
+import { MusicController } from './music.controller';
+import { MusicService } from './services/music.service';
+import { CloudinaryService } from './services/cludinary.service';
 @Module({
   imports: [
     ClientsModule.register([
       {
-        name: 'USER_SERVICE',
+        name: 'MUSIC_SERVICE',
         transport: Transport.RMQ,
         options: {
           urls: ['amqp://localhost:5672'],
-          queue: 'users_queue',
+          queue: 'music_queue',
           queueOptions: {
             durable: false,
           },
@@ -19,7 +19,7 @@ import { UserService } from './user.service';
       },
     ]),
   ],
-  controllers: [UserController],
-  providers: [UserService],
+  controllers: [ MusicController],
+  providers: [ MusicService , CloudinaryService],
 })
-export class UserModule {}
+export class MusicModule {}
